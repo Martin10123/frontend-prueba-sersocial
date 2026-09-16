@@ -27,7 +27,8 @@ export function PqrDetailPage() {
   const { id } = useParams()
   const pqrId = Number(id)
   const query = usePqrDetail(pqrId)
-  const { isAuthenticated } = useAuth()
+  const { isAuthenticated, user } = useAuth()
+  const canClose = user?.rol === "supervisor" || user?.rol === "admin"
   const openLogin = useUiStore((s) => s.openLogin)
   const [tab, setTab] = useState<Tab>("resumen")
 
@@ -169,6 +170,7 @@ export function PqrDetailPage() {
             <PqrStatusActions
               pqr={pqr}
               canManage={isAuthenticated}
+              canClose={canClose}
               onNeedLogin={openLogin}
             />
           </div>

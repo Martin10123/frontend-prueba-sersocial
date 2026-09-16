@@ -18,10 +18,16 @@ const NEXT: Record<string, string[]> = {
 type Props = {
   pqr: PqrDetail
   canManage: boolean
+  canClose?: boolean
   onNeedLogin?: () => void
 }
 
-export function PqrStatusActions({ pqr, canManage, onNeedLogin }: Props) {
+export function PqrStatusActions({
+  pqr,
+  canManage,
+  canClose = false,
+  onNeedLogin,
+}: Props) {
   const mutation = useUpdatePqrEstado(pqr.id)
   const [estado, setEstado] = useState(pqr.estado)
   const [prioridad, setPrioridad] = useState(pqr.prioridad)
@@ -63,6 +69,11 @@ export function PqrStatusActions({ pqr, canManage, onNeedLogin }: Props) {
   }
 
   const allowed = new Set([pqr.estado, ...(NEXT[pqr.estado] ?? [])])
+  const estadoOptions = ESTADOS_PQR.filter((o) => {
+    if (!allowed.has(o.value)) return false
+    if (o.value === "cerrada" && !canClose) return false
+    return true
+  })
 
   return (
     <div className="grid gap-4 rounded-2xl bg-gradient-to-br from-teal-50 via-white to-cyan-50 p-4 ring-1 ring-teal-100 sm:grid-cols-3">
@@ -72,7 +83,7 @@ export function PqrStatusActions({ pqr, canManage, onNeedLogin }: Props) {
           id="gestion-estado"
           value={estado}
           onValueChange={(value) => setEstado(value as typeof estado)}
-          options={ESTADOS_PQR.filter((o) => allowed.has(o.value)).map((o) => ({
+          options={estadoOptions.map((o) => ({
             value: o.value,
             label: o.label,
           }))}
@@ -99,6 +110,11 @@ export function PqrStatusActions({ pqr, canManage, onNeedLogin }: Props) {
           Guardar cambios
         </Button>
       </div>
+      {!canClose ? (
+        <p className="text-xs text-slate-500 sm:col-span-3">
+          Solo un supervisor o admin puede pasar el caso a Cerrada.
+        </p>
+      ) : null}
     </div>
   )
 }
