@@ -18,7 +18,7 @@ La URL de Jira es la misma que en el backend. Guía para crear el tablero: en el
 
 ## Uso de IA
 
-Se utilizó **Cursor** para armar la SPA (rutas, pantallas PQR, login, cliente HTTP y este README). El candidato revisó flujos reales contra el API (alta, filtros, radicado, roles y estadísticas).
+Se utilizó **Cursor** para armar la SPA (rutas, pantallas PQR, login, cliente HTTP y este README).
 
 ## Requisitos
 
