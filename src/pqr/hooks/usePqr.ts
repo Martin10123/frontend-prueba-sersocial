@@ -13,7 +13,7 @@ import type { CreatePqrPayload, PqrFilters } from "@/pqr/types"
 export function usePqrList(filters: PqrFilters) {
   return useQuery({
     queryKey: ["pqr", "list", filters],
-    queryFn: () => listPqr(filters),
+    queryFn: () => listPqr({ ...filters, page_size: filters.page_size ?? 20 }),
     placeholderData: keepPreviousData,
   })
 }

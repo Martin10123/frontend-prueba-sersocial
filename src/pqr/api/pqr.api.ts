@@ -1,15 +1,15 @@
 import { http } from "@/shared/api/http"
 import type {
   CreatePqrPayload,
+  PaginatedPqr,
   PqrDetail,
   PqrFilters,
-  PqrListItem,
   Seguimiento,
   StatsSummary,
 } from "@/pqr/types"
 
-export async function listPqr(filters: PqrFilters = {}): Promise<PqrListItem[]> {
-  const { data } = await http.get<PqrListItem[]>("/pqr/", { params: filters })
+export async function listPqr(filters: PqrFilters = {}): Promise<PaginatedPqr> {
+  const { data } = await http.get<PaginatedPqr>("/pqr/", { params: filters })
   return data
 }
 

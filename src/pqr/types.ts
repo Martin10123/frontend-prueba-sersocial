@@ -60,6 +60,15 @@ export type PqrFilters = {
   estado?: string
   prioridad?: string
   categoria?: string
+  page?: number
+  page_size?: number
+}
+
+export type PaginatedPqr = {
+  count: number
+  next: string | null
+  previous: string | null
+  results: PqrListItem[]
 }
 
 export type CreatePqrPayload = {
